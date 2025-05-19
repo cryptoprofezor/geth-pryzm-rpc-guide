@@ -43,6 +43,13 @@ sudo apt update && sudo apt install -y docker.io docker-compose
 sudo systemctl enable docker && sudo systemctl start docker
 ```
 
+### Verify Installation
+
+```bash
+docker --version
+docker-compose --version
+```
+
 ---
 
 ### 3. 💽 Format and Mount Your Attached Disk (Only Once When You Create VM)
