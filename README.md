@@ -27,7 +27,16 @@ This step-by-step guide will take you from zero to a fully functional **Ethereum
 
 ## 🛠 Step-by-Step Installation
 
-### 1. 📦 Install Docker and Docker Compose
+### 1. 📦 Install Dependencies (All Required Packages)
+
+```bash
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt install curl iptables build-essential git wget lz4 jq make gcc nano \
+  automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev \
+  libleveldb-dev tar clang bsdmainutils ncdu unzip -y
+```
+
+### 2. 🐳 Install Docker and Docker Compose
 
 ```bash
 sudo apt update && sudo apt install -y docker.io docker-compose
@@ -36,7 +45,7 @@ sudo systemctl enable docker && sudo systemctl start docker
 
 ---
 
-### 2. 💽 Format and Mount Your Attached Disk (Optional if already mounted)
+### 3. 💽 Format and Mount Your Attached Disk (Optional if already mounted)
 
 ```bash
 sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
@@ -48,7 +57,7 @@ sudo mount -o discard,defaults /dev/sdb /mnt/eth-data
 
 ---
 
-### 3. 📁 Create Directories and JWT Token
+### 4. 📁 Create Directories and JWT Token
 
 ```bash
 sudo mkdir -p /mnt/eth-data/ethereum/execution
@@ -59,7 +68,7 @@ openssl rand -hex 32 > jwt.hex
 
 ---
 
-### 4. 📝 Create docker-compose.yml
+### 5. 📝 Create docker-compose.yml
 
 ```bash
 nano docker-compose.yml
@@ -137,7 +146,7 @@ services:
 
 ---
 
-### 5. 🚀 Start the Node
+### 6. 🚀 Start the Node
 
 ```bash
 sudo docker-compose up -d
@@ -151,7 +160,7 @@ docker ps
 
 ---
 
-### 6. 🔍 Check Syncing Status
+### 7. 🔍 Check Syncing Status
 
 **Geth (Execution Layer)**
 
@@ -168,7 +177,7 @@ curl http://localhost:3500/eth/v1/node/syncing | jq
 
 ---
 
-### 7. 🌐 RPC Endpoints
+### 8. 🌐 RPC Endpoints
 
 * **Execution:** `http://<your-vm-ip>:8545`
 * **Beacon API:** `http://<your-vm-ip>:3500`
@@ -177,17 +186,43 @@ Use these in Aztec, DApps, dashboards, etc.
 
 ---
 
-### 8. 🔐 Open Firewall Ports (GCP)
+### 9. 🔐 Open Firewall Ports (GCP)
 
-Make sure these ports are allowed:
+> 📌 **No need to install or configure UFW/firewalld inside VPS**. Just set these from your **Google Cloud Console or CLI**.
 
-* `8545`, `8551` (RPC/Auth)
-* `30303` TCP/UDP (Geth P2P)
-* `4000`, `3500` (Beacon APIs)
+Use the following commands to allow all necessary ports via `gcloud` CLI:
+
+```bash
+gcloud compute firewall-rules create allow-geth-p2p \
+  --direction=INGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:30303,udp:30303 --source-ranges=0.0.0.0/0 --target-tags=geth-node
+
+gcloud compute firewall-rules create allow-geth-p2p-egress \
+  --direction=EGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:30303,udp:30303 --destination-ranges=0.0.0.0/0 --target-tags=geth-node
+
+gcloud compute firewall-rules create allow-prysm-p2p \
+  --direction=INGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:13000,udp:13000 --source-ranges=0.0.0.0/0 --target-tags=geth-node
+
+gcloud compute firewall-rules create allow-prysm-p2p-egress \
+  --direction=EGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:13000,udp:13000 --destination-ranges=0.0.0.0/0 --target-tags=geth-node
+
+gcloud compute firewall-rules create allow-geth-rpc \
+  --direction=INGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:8545,tcp:8551 --source-ranges=0.0.0.0/0 --target-tags=geth-node
+
+gcloud compute firewall-rules create allow-prysm-rest \
+  --direction=INGRESS --priority=1000 --network=default --action=ALLOW \
+  --rules=tcp:3500 --source-ranges=0.0.0.0/0 --target-tags=geth-node
+```
+
+> 🏷️ Don't forget to apply the tag `geth-node` to your VM instance in GCP.
 
 ---
 
-### 9. 🔁 Manage / Restart / Logs
+### 10. 🔁 Manage / Restart / Logs
 
 ```bash
 sudo docker-compose down        # Stop
