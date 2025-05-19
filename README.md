@@ -288,8 +288,8 @@ gcloud compute firewall-rules create allow-prysm-rest \
 sudo docker-compose down        # Stop
 sudo docker-compose up -d       # Restart
 
-docker logs -f geth              # Geth Logs
-docker logs -f prysm             # Prysm Logs
+docker compose logs -f          # Geth+pryzm Logs
+
 ```
 
 ---
