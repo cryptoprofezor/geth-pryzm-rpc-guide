@@ -120,10 +120,9 @@ lsblk
 ### 4. 📁 Create Directories and JWT Token
 
 ```bash
-sudo mkdir -p /mnt/eth-data/ethereum/execution
-sudo mkdir -p /mnt/eth-data/ethereum/consensus
-cd ~
-openssl rand -hex 32 > jwt.hex
+sudo mkdir -p /mnt/eth-data/execution
+sudo mkdir -p /mnt/eth-data/consensus
+sudo openssl rand -hex 32 | sudo tee /mnt/eth-data/jwt.hex
 ```
 
 ---
@@ -150,8 +149,8 @@ services:
       - 8546:8546
       - 8551:8551
     volumes:
-      - /mnt/eth-data/ethereum/execution:/data
-      - ./jwt.hex:/data/jwt.hex
+      - /mnt/eth-data/execution:/data
+      - /mnt/eth-data/jwt.hex:/data/jwt.hex
     command:
       - --sepolia
       - --http
@@ -174,14 +173,14 @@ services:
     container_name: prysm
     network_mode: host
     restart: unless-stopped
+    volumes:
+      - /mnt/eth-data/consensus:/data
+      - /mnt/eth-data/jwt.hex:/data/jwt.hex
+    depends_on:
+      - geth
     ports:
       - 4000:4000
       - 3500:3500
-    volumes:
-      - /mnt/eth-data/ethereum/consensus:/data
-      - ./jwt.hex:/data/jwt.hex
-    depends_on:
-      - geth
     command:
       - --sepolia
       - --accept-terms-of-use
@@ -202,6 +201,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
 ```
 
 ---
