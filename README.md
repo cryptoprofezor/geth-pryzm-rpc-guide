@@ -209,7 +209,7 @@ services:
 ### 6. 🚀 Start the Node
 
 ```bash
-sudo docker-compose up -d
+sudo docker compose up -d 
 ```
 
 Verify containers:
@@ -285,8 +285,8 @@ gcloud compute firewall-rules create allow-prysm-rest \
 ### 10. 🔁 Stop / Restart 
 
 ```bash
-sudo docker-compose down        # Stop
-sudo docker-compose up -d       # Restart
+sudo docker compose down        # Stop
+sudo docker compose up -d       # Start/restart
 ```
 
 ### Check Logs
