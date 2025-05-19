@@ -239,8 +239,8 @@ curl http://localhost:3500/eth/v1/node/syncing | jq
 
 ### 8. 🌐 RPC Endpoints
 
-* **Execution:** `http://<your-vm-ip>:8545`
-* **Beacon API:** `http://<your-vm-ip>:3500`
+* **Execution:** bash```http://<your-vm-ip>:8545```
+* **Beacon API:** bash```http://<your-vm-ip>:3500```
 
 Use these in Aztec, DApps, dashboards, etc.
 
@@ -291,14 +291,14 @@ gcloud compute firewall-rules create allow-prysm-rest \
 ### 10. 🔁 Stop / Restart 
 
 ```bash
-sudo docker compose down        # Stop
-sudo docker compose up -d       # Start/restart
+sudo docker compose down
+sudo docker compose up -d
 ```
 
 ### Check Logs
 
 ```bash
-docker compose logs -f          # Geth+pryzm Logs
+sudo docker compose logs -f
 ```
 
 ---
