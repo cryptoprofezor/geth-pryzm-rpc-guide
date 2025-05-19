@@ -66,7 +66,7 @@ sudo systemctl restart docker
 
 ```bash
 docker --version
-docker-compose --version
+docker compose version
 ```
 
 ---
