@@ -45,24 +45,43 @@ sudo systemctl enable docker && sudo systemctl start docker
 
 ---
 
-### 3. 💽 Format and Mount Your Attached Disk (Optional if already mounted)
+### 3. 💽 Format and Mount Your Attached Disk (Only Once When You Create VM)
+
+Follow these steps exactly to mount your external 1TB SSD in GCP:
 
 ```bash
-# Format the new disk (replace /dev/sdb with your actual disk if different)
-sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
-
-# Create a mount point
-dudo mkdir -p /mnt/eth-data
-
-# Mount the disk
-sudo mount -o discard,defaults /dev/sdb /mnt/eth-data
-
-# Add to /etc/fstab for auto-mount on reboot
-echo '/dev/sdb /mnt/eth-data ext4 discard,defaults,nofail 0 2' | sudo tee -a /etc/fstab
-
-# Confirm mount
+# STEP 1: Find your external disk name (usually /dev/sdb)
 lsblk
 ```
+
+✅ You will see output like:
+
+```
+sda     10G  disk  (main system disk)
+sdb    1000G disk  <-- This is your attached disk
+```
+
+If it's `/dev/sdb`, continue:
+
+```bash
+# STEP 2: Format the disk to ext4 (do this ONLY ONCE!)
+sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+
+# STEP 3: Create mount directory
+sudo mkdir -p /mnt/eth-data
+
+# STEP 4: Mount the disk
+sudo mount -o discard,defaults /dev/sdb /mnt/eth-data
+
+# STEP 5: Auto-mount on reboot (IMPORTANT)
+echo '/dev/sdb /mnt/eth-data ext4 discard,defaults,nofail 0 2' | sudo tee -a /etc/fstab
+
+# STEP 6: Confirm everything
+lsblk
+```
+
+> ✅ After reboot, your disk will always auto-mount to `/mnt/eth-data`
+> ❌ DO NOT repeat this formatting step — it will erase all blockchain data!
 
 > ⚠️ If unsure about disk name, run `lsblk` before starting.
 
