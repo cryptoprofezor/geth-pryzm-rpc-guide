@@ -239,10 +239,15 @@ curl http://localhost:3500/eth/v1/node/syncing | jq
 
 ### 8. 🌐 RPC Endpoints
 
-* **Execution:** bash```http://<your-vm-ip>:8545```
-* **Beacon API:** bash```http://<your-vm-ip>:3500```
+## Sepolia RPC ( In Other VPS )
+ 
+bash```http://<your-vm-ip>:8545```
 
-Use these in Aztec, DApps, dashboards, etc.
+## Beacon RPC 
+
+bash```http://<your-vm-ip>:3500```
+
+Use these in Aztec Sequencer Node ( Make Sure To Update Your RPC VPS IP On It Before Using It 
 
 ---
 
