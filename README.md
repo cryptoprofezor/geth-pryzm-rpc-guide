@@ -282,14 +282,17 @@ gcloud compute firewall-rules create allow-prysm-rest \
 
 ---
 
-### 10. 🔁 Manage / Restart / Logs
+### 10. 🔁 Stop / Restart 
 
 ```bash
 sudo docker-compose down        # Stop
 sudo docker-compose up -d       # Restart
+```
 
+### Check Logs
+
+```bash
 docker compose logs -f          # Geth+pryzm Logs
-
 ```
 
 ---
