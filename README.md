@@ -43,22 +43,28 @@ sudo apt update && sudo apt install -y docker.io docker-compose
 sudo systemctl enable docker && sudo systemctl start docker
 ```
 
-### Verify Installation
-
-```bash
-docker --version
-docker-compose --version
-```
-
 ---
 
 ### 3. 💽 Format and Mount Your Attached Disk (Optional if already mounted)
 
 ```bash
+# Format the new disk (replace /dev/sdb with your actual disk if different)
 sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
-sudo mkdir -p /mnt/eth-data
+
+# Create a mount point
+dudo mkdir -p /mnt/eth-data
+
+# Mount the disk
 sudo mount -o discard,defaults /dev/sdb /mnt/eth-data
+
+# Add to /etc/fstab for auto-mount on reboot
+echo '/dev/sdb /mnt/eth-data ext4 discard,defaults,nofail 0 2' | sudo tee -a /etc/fstab
+
+# Confirm mount
+lsblk
 ```
+
+> ⚠️ If unsure about disk name, run `lsblk` before starting.
 
 > ⚠️ Update `/etc/fstab` to auto-mount on reboot.
 
