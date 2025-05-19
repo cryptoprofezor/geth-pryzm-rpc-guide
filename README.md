@@ -250,6 +250,12 @@ Use these in Aztec, DApps, dashboards, etc.
 
 > 📌 **No need to install or configure UFW/firewalld inside VPS**. Just set these from your **Google Cloud Console or CLI**.
 
+### Login gcloud in Terminal
+
+```bash
+gcloud auth login
+```
+
 Use the following commands to allow all necessary ports via `gcloud` CLI:
 
 ```bash
