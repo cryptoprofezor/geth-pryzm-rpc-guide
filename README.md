@@ -232,7 +232,7 @@ curl http://localhost:8545 -X POST -H "Content-Type: application/json" \
 **Prysm (Consensus Layer)**
 
 ```bash
-curl http://localhost:3500/eth/v1/node/syncing | jq
+curl http://localhost:3500/eth/v1/node/syncing
 ```
 
 ---
