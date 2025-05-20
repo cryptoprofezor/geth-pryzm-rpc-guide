@@ -203,10 +203,10 @@ services:
 sudo docker compose up -d 
 ```
 
-Verify containers:
+Check Logs
 
 ```bash
-docker ps
+sudo docker compose logs -f
 ```
 
 ---
@@ -305,4 +305,17 @@ sudo docker compose logs -f
 
 ### ✅ Final Words
 
-Congrats! You now have a fully synced, persistent Sepolia node using your mounted SSD storage — perfect for Aztec testnet, validator setups, and custom infra! 🚀
+Congrats! You now have your own fully synced Sepolia RPC running on Google Cloud 💻  
+Perfect for Aztec testnet, validator setups, or your own infra needs 🚀
+
+---
+
+📌 **Follow for more updates:**
+
+- 🔹 GitHub → [@cryptoprofezor](https://github.com/cryptoprofezor)  
+- 🔹 Telegram → [@MrCryptoTamilan](https://t.me/MrCrypto_Tamilan)
+
+---
+
+More guides coming soon. Stay tuned 🔧🔥
+
