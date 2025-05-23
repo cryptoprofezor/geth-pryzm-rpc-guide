@@ -315,6 +315,8 @@ Perfect for Aztec testnet, validator setups, or your own infra needs 🚀
 - 🔹 GitHub → [@cryptoprofezor](https://github.com/cryptoprofezor)  
 - 🔹 Telegram → [@MrCryptoTamilan](https://t.me/MrCrypto_Tamilan)
 
+No VPS? No time to run RPC node? Chill bro. I’ll give you Sepolia + Beacon RPC valid for 1 month – budget-friendly. DM if needed
+
 ---
 
 More guides coming soon. Stay tuned 🔧🔥
