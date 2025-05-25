@@ -301,6 +301,29 @@ sudo docker compose up -d
 sudo docker compose logs -f
 ```
 
+### ⚠️ Important Update (Must Read)
+
+If you're running your own **Geth + Prysm node**, make sure to use **`http://`** (not `https://`) in your Aztec start command.
+
+> 🛠 Use `https://` **only when using third-party RPC providers** (like Alchemy, Nodereal, etc.)  
+> 🧑‍💻 Use `http://` **when connecting to your own local or VPS-hosted Geth/Prysm nodes**
+
+---
+
+### ✅ Correct Aztec Start Command for Self-Hosted RPC:
+
+```bash
+aztec start --node --archiver --sequencer \
+  --network alpha-testnet \
+  --l1-rpc-urls http://<your-vm-ip>:8545 \
+  --l1-consensus-host-urls http://<your-vm-ip>:3500 \
+  --sequencer.validatorPrivateKey 0xYOUR_PRIVATE_KEY \
+  --sequencer.coinbase 0xYOUR_PUBLIC_ADDRESS \
+  --p2p.p2pIp <your-vm-ip>
+```
+
+> ⚠️ Using `https://` with self-hosted nodes will silently fail and throw errors like `Rollup__InvalidManaBaseFee`, `Rollup__InvalidTimestamp`, `Rollup__InvalidProof`, etc.
+
 ---
 
 ### ✅ Final Words
